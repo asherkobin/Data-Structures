@@ -7,6 +7,10 @@ class LinkedList:
     def __init__(self):
         self.head = None
         self.tail = None
+        self.length = 0
+
+    def __len__(self):
+        return self.length
 
     def contains(self, value):
         result = False
@@ -35,6 +39,7 @@ class LinkedList:
       else:
         self.tail.next = new_node 
         self.tail = new_node
+      self.length += 1
 
     def remove_head(self):
       if self.head == None:
@@ -44,4 +49,5 @@ class LinkedList:
           self.tail = None
         value = self.head.value
         self.head = self.head.next
+        self.length -= 1
         return value
