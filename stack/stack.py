@@ -12,19 +12,31 @@ return elements in Last In First Out order.
 """
 #from .. doubly_linked_list.doubly_linked_list import DoublyLinkedList
 import sys
-sys.path.append("../doubly_linked_list")
-from doubly_linked_list import DoublyLinkedList
+sys.path.append("../singly_linked_list")
+from singly_linked_list import LinkedList, Node
 
 class Stack:
     def __init__(self):
         self.size = 0
-        self.storage = DoublyLinkedList()
+        self.storage = LinkedList()
 
     def __len__(self):
         return self.storage.length
 
     def push(self, value):
-        self.storage.add_to_head(value)
-
+        if self.storage.head == None:
+          self.storage.head = Node(value)
+          self.storage.tail = self.storage.head
+        else:
+          old_head = self.storage.head
+          self.storage.head = Node(value)
+          self.storage.head.next = old_head
+        self.storage.length += 1
+    
     def pop(self):
-        return self.storage.remove_from_head()
+        if self.storage.head == None:
+          return None
+        item_to_remove = self.storage.head
+        self.storage.head = self.storage.head.next
+        self.storage.length -= 1
+        return item_to_remove.value
