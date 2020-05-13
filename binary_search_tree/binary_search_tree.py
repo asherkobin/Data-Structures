@@ -17,27 +17,63 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        if value < self.value:
+          if self.left is None:
+            self.left = BSTNode(value)
+            return
+          else:
+            return self.left.insert(value)
+        elif value >= self.value:
+          if self.right is None:
+            self.right = BSTNode(value)
+            return
+          else:
+            return self.right.insert(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+      if self.value == target:
+        return True
+      if target < self.value:
+        if self.left is None:
+          return False
+        return self.left.contains(target)
+      if target > self.value:
+        if self.right is None:
+          return False
+        return self.right.contains(target)
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+      cur_node = self
+      max_value = self.value
+      while cur_node.right is not None:
+        cur_node = cur_node.right
+        max_value = cur_node.value
+      return max_value
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+      fn(self.value)
+      if self.left is not None:
+        fn(self.left.value)
+        self.left.for_each(fn)
+      if self.right is not None:
+        fn(self.right.value)
+        self.right.for_each(fn)
+      return
+
 
     # Part 2 -----------------------
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+      if node:
+        self.in_order_print(node.left)
+        print(node.value)
+        self.in_order_print(node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
@@ -59,3 +95,14 @@ class BSTNode:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
         pass
+
+bst = BSTNode(1)
+bst.insert(8)
+bst.insert(5)
+bst.insert(7)
+bst.insert(6)
+bst.insert(3)
+bst.insert(4)
+bst.insert(2)
+
+bst.in_order_print(bst)
