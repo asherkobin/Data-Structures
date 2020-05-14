@@ -9,6 +9,7 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+from collections import deque
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -20,13 +21,13 @@ class BSTNode:
         if value < self.value:
           if self.left is None:
             self.left = BSTNode(value)
-            return
+            return # OPTIONAL
           else:
             return self.left.insert(value)
         elif value >= self.value:
           if self.right is None:
             self.right = BSTNode(value)
-            return
+            return # OPTIONAL
           else:
             return self.right.insert(value)
 
@@ -45,7 +46,8 @@ class BSTNode:
         return self.right.contains(target)
 
     # Return the maximum value found in the tree
-    def get_max(self):
+    # INTERATIVE
+    def get_max2(self):
       cur_node = self
       max_value = self.value
       while cur_node.right is not None:
@@ -53,17 +55,21 @@ class BSTNode:
         max_value = cur_node.value
       return max_value
 
-    # Call the function `fn` on the value of each node
+    # RECURSIVE
+    def get_max(self):
+      if not self.right:
+        return self.value
+      return self.right.get_max()
+
+    # RECURSIVE
+
     def for_each(self, fn):
       fn(self.value)
       if self.left is not None:
-        fn(self.left.value)
         self.left.for_each(fn)
       if self.right is not None:
-        fn(self.right.value)
         self.right.for_each(fn)
       return
-
 
     # Part 2 -----------------------
 
@@ -77,13 +83,30 @@ class BSTNode:
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
-    def bft_print(self, node):
-        pass
+    def dft_print(self, node):
+      stack = []
+      stack.append(self)
+      while len(stack) > 0:
+        current = stack.pop()
+        if current.right:
+          stack.append(current.right)
+        if current.left:
+          stack.append(current.left)
+        print(current.value)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
-    def dft_print(self, node):
-        pass
+    def bft_print(self, node):
+      queue = deque()
+      queue.append(self)
+      while len(queue) > 0:
+        current = queue.popleft()
+        if current.left:
+          queue.append(current.left)
+        if current.right:
+          queue.append(current.right)
+        print(current.value)
+
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -96,6 +119,14 @@ class BSTNode:
     def post_order_dft(self, node):
         pass
 
+# bst = BSTNode(5)
+# bst.insert(30)
+# max_val = bst.get_max()
+# print("Max: " + str(max_val))
+# # should print 30 but prints None
+
+
+
 bst = BSTNode(1)
 bst.insert(8)
 bst.insert(5)
@@ -106,3 +137,28 @@ bst.insert(4)
 bst.insert(2)
 
 bst.in_order_print(bst)
+bst.bft_print(bst)
+bst.dft_print(bst)
+#     # ITERATIVE
+# import random
+# v1 = random.randint(1, 101)
+# v2 = random.randint(1, 101)
+# v3 = random.randint(1, 101)
+# v4 = random.randint(1, 101)
+# v5 = random.randint(1, 101)
+
+# bst1 = BSTNode(5)
+# bst1.insert(2)
+# bst1.insert(1)
+# bst1.insert(4)
+# bst1.insert(5)
+# bst1.insert(3)
+
+# bst1.in_order_print(bst1)
+# bst1.for_each(lambda v: print("for_each: " + str(v)))
+# bst1.interative_for_each(lambda v: print("interative_for_each: " + str(v)))
+# bst1.interative_for_each_using_queue(lambda v: print("interative_for_each_using_queue: " + str(v)))
+
+#so breadth/iterate for queues and depth/recursion for stacks?
+
+# research breadth-first vs depth-first
