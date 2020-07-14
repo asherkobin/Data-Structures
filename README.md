@@ -1,10 +1,10 @@
 # Data Structures 
 
 Topics:
- * Linked Lists
- * Queues
- * Stacks
- * Binary Search Trees
+ * Linked Lists (Tuesday)
+ * Queues (Monday)
+ * Stacks (Monday)
+ * Binary Search Trees (Wednesday)
  * Related Code Challenge Problems
 
 Stretch Goals:
